@@ -27,7 +27,7 @@ func NewFile(p string,
 
 // Create file in disk
 func (f *File) Create() error {
-	pf, err := os.Create(f.path)
+	pf, err := os.OpenFile(f.path, os.O_RDWR|os.O_CREATE|os.O_EXCL, 0666)
 	if err != nil {
 		return err
 	}
@@ -39,7 +39,7 @@ func (f *File) Create() error {
 func (f *File) Save(d interface{}) error {
 	f.mutex.Lock()
 	defer f.mutex.Unlock()
-	fp, err := os.OpenFile(f.path, os.O_APPEND|os.O_WRONLY, os.ModeAppend)
+	fp, err := os.OpenFile(f.path, os.O_WRONLY, os.ModeAppend)
 	if err != nil {
 		return err
 	}

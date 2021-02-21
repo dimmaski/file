@@ -39,7 +39,7 @@ func (f *File) Create() error {
 func (f *File) Save(d interface{}) error {
 	f.mutex.Lock()
 	defer f.mutex.Unlock()
-	fp, err := os.OpenFile(f.path, os.O_WRONLY, os.ModeAppend)
+	fp, err := os.OpenFile(f.path, os.O_WRONLY|os.O_TRUNC, os.ModePerm)
 	if err != nil {
 		return err
 	}
